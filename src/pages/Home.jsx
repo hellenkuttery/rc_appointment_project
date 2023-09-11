@@ -1,15 +1,24 @@
 import Doctors from "./../components/Doctors";
-import Appointments from "./../components/Appointments";
-import {doctorData} from "../helper/data"
+import { doctorData } from "../helper/data";
 import { useState } from "react";
+import appointmentData from "../helper/data";
+import AppointmentsList from './../components/AppointmentsList';
 
 const Home = () => {
-    const [doctors,setDoctors]=useState(doctorData)
+  const [app, setApp] = useState(appointmentData)
+  const [doctors, setDoctors] = useState(doctorData);
+console.log(app);
   return (
     <main className="text-center mt-2">
       <h1 className="display-5 text-danger">CLARUS HOSPITAL</h1>
-      <Doctors  doctors={doctors}/>
-      <Appointments></Appointments>
+      <Doctors
+        doctors={doctors}
+        app={app}
+        setApp={setApp}
+      />
+      <AppointmentsList    app={app}
+       
+       />
     </main>
   );
 };

@@ -1,54 +1,71 @@
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
-function AddModal() {
-  const [show, setShow] = useState(false);
+function AddModal({
+  show,
+  handleClose,
+  doctorName,
+  app,
+  setApp,
+}) {
+  const [patient, setPatient] = useState();
+  const [date, setDate] = useState("");
+  
+  
+  const handleSubmit = (e) => {
+    e.preventDefault()
+ 
+    setApp([...app,
+      {
+        id: new Date().getTime(),
+        patient: patient,
+        day: date,
+        consulted: false,
+        doctor: doctorName
+      },
+    ])   
+    console.log(app);
+    handleClose()
+  }
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+ 
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
-
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Reservation for doctor {doctorName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+        <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
+              <Form.Label>Patient Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter email"
+                onChange={(e) => setPatient(e.target.value)}
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Check me out" />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
+              <Form.Label>Date & Time</Form.Label>
+              <Form.Control
+                type="datetime-local"
+                placeholder="Password"
+                onChange={(e) => setDate(e.target.value)}
+              />
+            </Form.Group>    
+            <Button variant="success" >
+            Save
+          </Button>
+          <Button variant="danger" onClick={handleClose}>
+            CLose
+          </Button>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
+     
       </Modal>
     </>
   );
