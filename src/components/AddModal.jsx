@@ -57,7 +57,7 @@ function AddModal({
                 onChange={(e) => setDate(e.target.value)}
               />
             </Form.Group>    
-            <Button variant="success" >
+            <Button variant="success" type="submit">
             Save
           </Button>
           <Button variant="danger" onClick={handleClose}>
